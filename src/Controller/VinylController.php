@@ -33,7 +33,7 @@ class VinylController extends AbstractController
     #[Route('/browse/{slug}', name: 'app_browse')]
     public function browse(HttpClientInterface $httpClient, CacheInterface $cache, string $slug = null): Response
     {
-        dump($cache);
+        //dump($cache);
         $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null;
         $mixes = $cache->get('mixes_data', function (CacheItemInterface $cacheItem) use ($httpClient){
             $cacheItem->expiresAfter(5);
@@ -45,7 +45,7 @@ class VinylController extends AbstractController
         //use DateTimeFormatter for this code (no longer needed)
         //     foreach ($mixes as $key => $mix){
         //        $mixes[$key]['ago'] = $timeFormatter->formatDiff($mix['createdAt']);
-        //     }  
+        //     }
 
         return $this->render('vinyl/browse.html.twig', [
             'genre' => $genre,
