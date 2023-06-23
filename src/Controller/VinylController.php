@@ -35,6 +35,7 @@ class VinylController extends AbstractController
     public function browse(MixRepository $mixRepository, string $slug = null): Response
     {
         //dump($cache);
+        //dd($this->getParameter('kernel.project_dir'));
         $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null;
 
         $mixes = $mixRepository->findAll();
