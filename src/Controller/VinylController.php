@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\MixRepository;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,16 +32,12 @@ class VinylController extends AbstractController
     }
 
     #[Route('/browse/{slug}', name: 'app_browse')]
-    public function browse(HttpClientInterface $httpClient, CacheInterface $cache, string $slug = null): Response
+    public function browse(HttpClientInterface $httpClient, CacheInterface $cache, MixRepository $mixRepository, string $slug = null): Response
     {
         //dump($cache);
         $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null;
-        $mixes = $cache->get('mixes_data', function (CacheItemInterface $cacheItem) use ($httpClient){
-            $cacheItem->expiresAfter(5);
-            $response = $httpClient->request('GET', 'https://raw.githubusercontent.com/SymfonyCasts/vinyl-mixes/main/mixes.json');
 
-            return $response->toArray();
-        });
+        $mixes = $mixRepository->findAll();
 
         //use DateTimeFormatter for this code (no longer needed)
         //     foreach ($mixes as $key => $mix){
