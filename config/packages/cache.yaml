@@ -21,6 +21,3 @@ framework:
         #pools:
             #my.dedicated.cache: null
 
-when@dev:
-    parameters:
-        cache_adapter: 'cache.adapter.array'
