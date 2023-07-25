@@ -34,6 +34,7 @@ class MixRepository
             $cacheItem->expiresAfter($this->isDebug ? 5 : 60);
             $response = $this->githubContentClient->request('GET', 'https://raw.githubusercontent.com/SymfonyCasts/vinyl-mixes/main/mixes.json');
 
+
             return $response->toArray();
         });
     }
